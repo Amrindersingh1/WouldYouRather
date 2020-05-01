@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component ,Fragment} from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { handleInitialData } from "./actions/shared";
+import { connect } from "react-redux";
+import { BrowserRouter , Route, Switch } from 'react-router-dom';
+import Login from './components/Login';
+import NavBar from './components/NavBar';
+import Home from './components/Home';
+import NewPoll from './components/NewPoll';
+import Leaderboard from './components/LeaderBoard';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+  componentDidMount() {
+    this.props.handleInitialData();
+  }
+  render() {
+    const { authUser } = this.props;
+    return (
+      <BrowserRouter>
+        <div className="App">
+          {authUser === null ? (
+            <Route
+              render={() => (
+                <Login />
+              )}
+            />
+          ) :  (
+            <Fragment>
+              <NavBar />
+                <Switch>
+                  <Route exact path="/" component={Home} />
+                  <Route path="/add" component={NewPoll} />
+                  <Route path="/leaderboard" component={Leaderboard} />
+                </Switch>
+            </Fragment>
+          )}
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
 
-export default App;
+
+function mapStateToProps({ authUser , users}) {
+  return {
+    authUser
+  };
+}
+
+export default connect(mapStateToProps, { handleInitialData })(App);
