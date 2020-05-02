@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+
 import {
   Header,
   Segment,
@@ -12,7 +14,7 @@ import {
   Image,
   Button,
   Progress,
-} from "semantic-ui-react"
+} from "semantic-ui-react";
 
 export class ResultCard extends Component {
   navBack = () => {
@@ -21,17 +23,32 @@ export class ResultCard extends Component {
 
   render() {
     const { questions, user } = this.props;
-    const question = questions[this.props.match.params.questionId];
-    const userVote = user.answers[this.props.match.params.questionId];
-    const total =
-      question.optionOne.votes.length + question.optionTwo.votes.length;
-      let optionOne = question.optionOne.text;
-      let optionTwo = question.optionTwo.text;
-    if(userVote===optionOne) {
-        optionOne += ' (Your Answer)';
-    } else {
-        optionTwo += ' (Your Answer)';
+    const question = questions[this.props.match.params.question_id];
+
+    let badPath = false;
+    if (question === undefined) {
+      badPath = true;
     }
+
+    if (badPath === true) {
+      return <Redirect to="/questions/notfound" />;
+    }
+
+    const userVote = user.answers[this.props.match.params.question_id];
+    const optionOneVotes = question.optionOne.votes.length;
+    const optionTwoVotes = question.optionTwo.votes.length;
+    const total = optionOneVotes + optionTwoVotes;
+    let optionOne =
+      question.optionOne.text + " voted by " + optionOneVotes + " users ";
+    let optionTwo =
+      question.optionTwo.text + " voted by " + optionTwoVotes + " users ";
+    if (userVote === optionOne) {
+      optionOne += " (Your Answer)";
+    } else {
+      optionTwo += " (Your Answer)";
+    }
+    const percent1 = ((100 * optionOneVotes) / total).toFixed(2);
+    const percent2 = ((100 * optionTwoVotes) / total).toFixed(2);
 
     return (
       <Container textAlign="center" size="large">
@@ -55,20 +72,18 @@ export class ResultCard extends Component {
                 <Divider />
                 <Grid.Row>
                   <Progress
-                    value={question.optionOne.votes.length}
-                    total={total}
-                    progress="ratio"
                     size="large"
                     color="purple"
+                    percent={percent1}
+                    progress
                   >
                     {optionOne}
                   </Progress>
                   <Progress
-                    value={question.optionTwo.votes.length}
-                    total={total}
-                    progress="ratio"
                     size="large"
                     color="pink"
+                    percent={percent2}
+                    progress
                   >
                     {optionTwo}
                   </Progress>

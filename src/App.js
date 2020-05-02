@@ -1,16 +1,15 @@
-import React, { Component ,Fragment} from "react";
-import logo from "./logo.svg";
+import React, { Component, Fragment } from "react";
 import "./App.css";
 import { handleInitialData } from "./actions/shared";
 import { connect } from "react-redux";
-import { BrowserRouter , Route, Switch } from 'react-router-dom';
-import Login from './components/Login';
-import NavBar from './components/NavBar';
-import Home from './components/Home';
-import NewPoll from './components/NewPoll';
-import Leaderboard from './components/LeaderBoard';
-import ResultCard from './components/ResultCard';
-
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Login from "./components/Login";
+import NavBar from "./components/NavBar";
+import Home from "./components/Home";
+import NewPoll from "./components/NewPoll";
+import Leaderboard from "./components/LeaderBoard";
+import ResultCard from "./components/ResultCard";
+import { Container, Header } from "semantic-ui-react";
 
 class App extends Component {
   componentDidMount() {
@@ -22,20 +21,17 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           {authUser === null ? (
-            <Route
-              render={() => (
-                <Login />
-              )}
-            />
-          ) :  (
+            <Route render={() => <Login />} />
+          ) : (
             <Fragment>
               <NavBar />
-                <Switch>
-                  <Route exact path="/" component={Home} />
-                  <Route path="/add" component={NewPoll} />
-                  <Route path="/leaderboard" component={Leaderboard} />
-                  <Route path="/questions/:questionId" component={ResultCard} />
-                </Switch>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/add" component={NewPoll} />
+                <Route path="/leaderboard" component={Leaderboard} />
+                <Route path="/questions/:question_id" component={ResultCard} />
+                <Route path="/questions/notfound" component={NotFound} />
+              </Switch>
             </Fragment>
           )}
         </div>
@@ -44,10 +40,17 @@ class App extends Component {
   }
 }
 
+const NotFound = () => {
+  return (
+    <Container textAlign="center">
+      <Header as="h2">404 Not Found</Header>
+    </Container>
+  );
+};
 
-function mapStateToProps({ authUser , users}) {
+function mapStateToProps({ authUser, users }) {
   return {
-    authUser
+    authUser,
   };
 }
 
