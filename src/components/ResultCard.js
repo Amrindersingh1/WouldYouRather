@@ -12,18 +12,7 @@ import {
   Image,
   Button,
   Progress,
-} from "semantic-ui-react";
-
-const YourVoteLabel = () => (
-  <Label color="orange" ribbon="right" className="vote">
-    <Icon name="check circle outline" size="big" className="compact" />
-    <div style={{ float: "right" }}>
-      Your
-      <br />
-      Vote
-    </div>
-  </Label>
-);
+} from "semantic-ui-react"
 
 export class ResultCard extends Component {
   navBack = () => {
@@ -34,7 +23,15 @@ export class ResultCard extends Component {
     const { questions, user } = this.props;
     const question = questions[this.props.match.params.questionId];
     const userVote = user.answers[this.props.match.params.questionId];
-    const total = question.optionOne.votes.length + question.optionTwo.votes.length;
+    const total =
+      question.optionOne.votes.length + question.optionTwo.votes.length;
+      let optionOne = question.optionOne.text;
+      let optionTwo = question.optionTwo.text;
+    if(userVote===optionOne) {
+        optionOne += ' (Your Answer)';
+    } else {
+        optionTwo += ' (Your Answer)';
+    }
 
     return (
       <Container textAlign="center" size="large">
@@ -57,8 +54,24 @@ export class ResultCard extends Component {
                 </Grid.Row>
                 <Divider />
                 <Grid.Row>
-                  <Progress value={question.optionOne.votes.length} total={total} progress="ratio" size="large" color='purple'/>
-                  <Progress value={question.optionTwo.votes.length} total={total} progress="ratio" size="large" color='pink'/>
+                  <Progress
+                    value={question.optionOne.votes.length}
+                    total={total}
+                    progress="ratio"
+                    size="large"
+                    color="purple"
+                  >
+                    {optionOne}
+                  </Progress>
+                  <Progress
+                    value={question.optionTwo.votes.length}
+                    total={total}
+                    progress="ratio"
+                    size="large"
+                    color="pink"
+                  >
+                    {optionTwo}
+                  </Progress>
                   <Button
                     basic
                     color="grey"
