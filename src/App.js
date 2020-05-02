@@ -9,6 +9,7 @@ import NavBar from './components/NavBar';
 import Home from './components/Home';
 import NewPoll from './components/NewPoll';
 import Leaderboard from './components/LeaderBoard';
+import ResultCard from './components/ResultCard';
 
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
                   <Route exact path="/" component={Home} />
                   <Route path="/add" component={NewPoll} />
                   <Route path="/leaderboard" component={Leaderboard} />
+                  <Route path="/questions/:questionId" component={ResultCard} />
                 </Switch>
             </Fragment>
           )}

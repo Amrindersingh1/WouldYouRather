@@ -36,13 +36,13 @@ class LeaderBoard extends Component {
                 </Grid.Row>
                 <Divider />
                 <Grid.Row  centered>
-                  <Grid.Column width="6"  padded>
+                  <Grid.Column width="6"  >
                     <Header as="h5">
                       Answered Questions: {user.answers}
                     </Header>
                   </Grid.Column>
                   <Divider />
-                  <Grid.Column width="6"  padded>
+                  <Grid.Column width="6"  >
                   <Header as="h5">
                       Posted Questions: {user.questions}
                     </Header>

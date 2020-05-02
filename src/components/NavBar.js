@@ -18,7 +18,7 @@ class NavBar extends Component {
     const { authUser, users } = this.props;
 
     return (
-      <Responsive as={Menu}  pointing secondary size='large' padded>
+      <Responsive as={Menu}  pointing secondary size='large'>
         <Menu.Item name="Home" as={NavLink} to="/" exact />
         <Menu.Item name="New poll" as={NavLink} to="/add" />
         <Menu.Item name="Leader Board" as={NavLink} to="/leaderboard" />
