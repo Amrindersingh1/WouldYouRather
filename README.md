@@ -1,10 +1,12 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0d4e2d4c-4eec-4454-add3-147ec395323c/deploy-status)](https://app.netlify.com/sites/wouldyouratherapp/deploys)
+
 # Would You Rather
 
 Would You Rather is a web app build with [react](https://reactjs.org/) that lets a user create the “Would You Rather?” poll. 
-The Game goes like:
-User can Make a poll
-All other user can answer the poll
-LeaderBoard shows most ranked users
+- The Game goes like:
+- User can Make a poll
+- All other user can answer the poll
+- LeaderBoard shows most ranked users
 
 
 ## Project Setup
